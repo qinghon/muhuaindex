@@ -1,0 +1,5 @@
+\.idea
+config.yaml
+GeoLite2-City.mmdb
+ipipfree.ipdb
+*.sql
