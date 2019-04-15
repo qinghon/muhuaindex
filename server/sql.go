@@ -119,7 +119,7 @@ func query_time(domain string) ([]Data_For_Query, error) {
 	unixtime := time.Now().Unix() - 360
 	sqlStr := "SELECT time_dns,time_first_package,time_total,IP," +
 		"http_code,size_download,NUM_REDIRECTS,speed_download,time_redirect,time_pretransfer," +
-		"time_starttransfer FROM domain_time WHERE timestamp>? AND " + `domain=?`
+		"time_starttransfer FROM domain_time WHERE unix_timestamp(timestamp)>? AND " + `domain=?`
 	stmt, _ := db.Prepare(sqlStr)
 	rows, err := stmt.Query(unixtime, domain)
 	if err != nil {
@@ -139,7 +139,6 @@ func query_time(domain string) ([]Data_For_Query, error) {
 		data_list = append(data_list, data)
 	}
 	defer rows.Close()
-	//fmt.Println(data_list)
 	return data_list, nil
 }
 
