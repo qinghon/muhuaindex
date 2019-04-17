@@ -5,9 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/ipipdotnet/ipdb-go"
-	"github.com/oschwald/geoip2-golang"
 	"log"
-	"net"
 	"net/http"
 	"strings"
 	"time"
@@ -150,6 +148,7 @@ func ipip_query(s string) (string, error) {
 	res, err := db.FindInfo(s, "CN")
 	return res.RegionName, nil
 }
+/*
 func geoip_query(s string) (uint, error) {
 	geodb, err := geoip2.Open(global_config.Control.Geoip_file_path)
 	if err != nil {
@@ -160,6 +159,7 @@ func geoip_query(s string) (uint, error) {
 	city, _ := geodb.City(net.ParseIP(s))
 	return city.City.GeoNameID, nil
 }
+*/
 
 func query_city(d []Data_For_Query) (map[string][]Data_For_Query, error) {
 	tmp := map[string][]Data_For_Query{}

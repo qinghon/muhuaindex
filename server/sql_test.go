@@ -69,6 +69,7 @@ func Test_ipip_query(t *testing.T)  {
 	}
 	t.Log(res)
 }
+/*
 func Test_geoip_query(t *testing.T)  {
 	res,err:=geoip_query("182.91.170.36")
 	if err!=nil {
@@ -76,3 +77,4 @@ func Test_geoip_query(t *testing.T)  {
 	}
 	t.Log(res)
 }
+*/

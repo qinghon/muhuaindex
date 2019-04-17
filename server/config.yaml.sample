@@ -12,5 +12,4 @@ control:
   # 网站检测为不可访问的阈值，值为检测结果中失败的比例
   http_fail_threshold : 0.74
   # geoip or ipip db file path
-  geoip_file_path : ./GeoLite2-City.mmdb
   ipip_file_path: ./ipipfree.ipdb
