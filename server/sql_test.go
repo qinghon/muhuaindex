@@ -6,7 +6,7 @@ import (
 )
 
 func Test_insert_time(t *testing.T)  {
-	initdb()
+	connectdb()
 	a:=[]map[string]interface{}{}
 	row:=make(map[string]interface{})
 	row["domain"]="baidu.com"
@@ -28,7 +28,7 @@ func Test_insert_time(t *testing.T)  {
 	db.Close()
 }
 func Test_query_time(t *testing.T)  {
-	initdb()
+	connectdb()
 	_,err:=query_time("qq.com")
 	if err!=nil {
 		t.Errorf("query fail:%s",err)

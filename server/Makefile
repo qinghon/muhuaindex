@@ -18,6 +18,9 @@ build-amd64: setup
 docker: build-amd64
 	docker build -t ${PROJECT_NAME}:${VERSION} .
 	docker tag ${PROJECT_NAME}:${VERSION} ${PROJECT_NAME}:latest
-	
+
+clean-docker:
+	docker image rm ${PROJECT_NAME}:${VERSION} ${PROJECT_NAME}:latest
+
 clean:
 	rm -rf build

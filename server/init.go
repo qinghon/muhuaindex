@@ -1,13 +1,16 @@
 package main
 
 import (
+	"database/sql"
 	"errors"
+	"fmt"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
 	"os"
 	"reflect"
 	"strconv"
+	"strings"
 )
 
 type Conf struct {
@@ -113,6 +116,44 @@ func (config *Conf) getconf_env() (Conf, error) {
 	return *config, nil
 }
 
+
+func initdb(config Conf)  {
+	//初始化数据库
+	if PathExist("init.lock") {
+		log.Println("init.lock exists ")
+		return
+	}else {
+		f,err:=os.Create("init.lock")
+		if err!=nil {
+			log.Println(err)
+		}
+		defer f.Close()
+	}
+	var err error
+	par := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&timeout=30s",
+		config.DATABASE_USER,
+		config.DATABASE_PASSWD,
+		config.DATABASE_HOST,
+		config.DATABASE_PORT,
+		config.DATABASE_NAME)
+
+	db, err = sql.Open("mysql", par)
+	if err != nil {
+		log.Println("Failed to connect to log mysql: ", err)
+	}
+	file,err:=ioutil.ReadFile("init.sql")
+	if err!=nil {
+		log.Println(err)
+	}
+	resquest:=strings.Split(string(file),";\n")
+	for _,req:=range resquest {
+		_,err:=db.Exec(req)
+		if err!=nil {
+			log.Println("Error run:",err)
+		}
+	}
+	log.Println("Create table over!")
+}
 /* Global Variables */
 var global_config Conf
 
@@ -128,8 +169,9 @@ func initall() {
 			log.Fatalln(err)
 		}
 	}
-	
-	db, err = initdb()
+	initdb(global_config)
+	db, err = connectdb()
+
 	if err != nil {
 		log.Fatal(err)
 	}

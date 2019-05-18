@@ -25,3 +25,11 @@ func Test_check(t *testing.T)  {
 	}
 
 }
+func Test_initdb(t *testing.T)  {
+	var c Conf
+	global_config,err:=c.getconf()
+	if err !=nil{
+		t.Error(err)
+	}
+	initdb(global_config)
+}

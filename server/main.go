@@ -10,8 +10,8 @@ func main() {
 	initall()
 	engine := gin.Default()
 	//engine.GET("/", WebRoot)
-	engine.POST("/get_list", Handle)  //客户端上传API
-	engine.GET("/get_list", get_list_json) //获取网站列表
+	engine.POST("/api", upload)       //客户端上传API
+	engine.GET("/api", get_list_json) //获取网站列表
 	engine.POST("/add_list" ,add_list_json)
 	engine.GET("/get_score",get_score)
 	engine.Run("0.0.0.0:6666")
@@ -21,7 +21,7 @@ func main() {
 func WebRoot(context *gin.Context) {
 	context.String(http.StatusOK, "<h1>hello world</h1>")
 }*/
-func Handle(c *gin.Context) {
+func upload(c *gin.Context) {
 	var a All
 	err := c.ShouldBind(&a)
 	if err != nil {

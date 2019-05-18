@@ -1,0 +1,42 @@
+version: '2'
+
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+    - data_db:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
+      MYSQL_DATABASE: gogin
+      MYSQL_USER: gogin
+      MYSQL_PASSWORD: gogin_password
+    networks:
+    - index
+
+
+  server:
+    image: domaintest-server:latest
+    depends_on:
+      - db
+    ports:
+      - 6666:6666
+    restart: always
+    environment:
+      DATABASE_USER: gogin
+      DATABASE_PASSWD: gogin_password
+      DATABASE_NAME: gogin
+      DATABASE_PORT: 3306
+      DATABASE_HOST: db
+      http_fail_threshold: 0.74
+    #volumes:
+    #  - /path/you/ipip_file_path:/ipipfree.ipdb
+    networks:
+    - index
+
+networks:
+  index:
+    driver: bridge
+volumes:
+  data_db:
+

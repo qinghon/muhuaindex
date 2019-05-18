@@ -40,7 +40,7 @@ type country_data struct {
 	Province     map[string]Signle_data `json:"province"`
 }
 
-func initdb() (*sql.DB, error) {
+func connectdb() (*sql.DB, error) {
 	var err error
 	par := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&timeout=30s",
 		global_config.DATABASE_USER,
